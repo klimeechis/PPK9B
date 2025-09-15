@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Интернет-магазин продуктов</title>
+<!-- Шрифты для стильного вида -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  /* Общие стили */
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f7;
+    color: #333;
+  }
+
+  /* хедер */
+  header {
+    background: #fff;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  header h1 {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #222;
+  }
+
+  header p {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  /* сетка товаров */
+  #product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 30px 20px;
+    justify-content: center;
+  }
+
+  /* карточка продукта */
+  .product {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    width: calc(33.333% - 40px);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+
+  .product:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+  }
+
+  /* фото продукта */
+  .product img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    max-height: 180px;
+  }
+
+  /* имя продукта */
+  .product h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #111;
+  }
+
+  /* описание */
+  .product p {
+    margin: 0 0 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  /* цена */
+  .price {
+    font-weight: 700;
+    color: #222;
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+
+  /* кнопка */
+  button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #007aff; /* Apple-стиль голубая кнопка */
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background-color: #005bb5;
+    transform: scale(1.02);
+  }
+
+  /* детали продукта */
+  .product-details {
+    overflow: hidden;
+    max-height: 0;
+    margin-top: 10px;
+    background-color: #f0f0f5;
+    padding: 0 15px;
+    border-radius: 8px;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  /* активное состояние */
+  .product-details.show {
+    max-height: 200px;
+    padding: 10px 15px;
+  }
+
+  /* адаптив для мобильных */
+  @media(max-width: 1000px){
+    .product {
+      width: calc(50% - 30px);
+    }
+  }
+
+  @media(max-width: 600px){
+    #product-list {
+      flex-direction: column;
+      align-items: center;
+    }
+    .product {
+      width: 90%;
+    }
+  }
+
+  /*подвал*/
+  footer {
+    background: #fff;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 1rem;
+    border-top: 1px solid #ddd;
+  }
+
+  footer p {
+    margin: 8px 0;
+  }
+
+  .phone {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #4CAF50; /* зелененький */
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Интернет-магазин продуктов</h1>
+  <p>Свежие и качественные продукты с быстрой доставкой</p>
+</header>
+
+<main>
+  <div id="product-list"></div>
+</main>
+
+<footer>
+  <p>Звоните нам по телефону:</p>
+  <p class="phone">+7 (999) 123-45-67</p>
+  <p>Работаем ежедневно с 9:00 до 21:00</p>
+</footer>
+
+<script>
+const products = [
+  {
+    id: 1,
+    name: "Яблоко",
+    description: "Свежее красное яблоко",
+    price: 50,
+    details: "Выращено в садах Краснодарского края. Сорт: Антоновка.",
+    image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    id: 2,
+    name: "Хлеб",
+    description: "Свежий пшеничный хлеб",
+    price: 30,
+    details: "Испечён сегодня утром из муки высшего сорта без добавок.",
+    image: "https://images.unsplash.com/photo-1604908177520-0bd0d96436e4?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    id: 3,
+    name: "Молоко",
+    description: "1 литр молока",
+    price: 60,
+    details: "Свежесобранное от местных фермеров, 3.2% жирности.",
+    image: "https://images.unsplash.com/photo-1582515073490-399813a0eabd?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    id: 4,
+    name: "Яйца",
+    description: "10 штук куриных яиц",
+    price: 80,
+    details: "От кур свободного выгула. Категория: С1.",
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    id: 5,
+    name: "Сыр",
+    description: "200 г твёрдого сыра",
+    price: 150,
+    details: "Твёрдый сыр с выдержкой 6 месяцев, насыщенный вкус и аромат.",
+    image: "https://images.unsplash.com/photo-1603398938378-b18306e6d317?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    id: 6,
+    name: "Мёд",
+    description: "Банка натурального мёда",
+    price: 250,
+    details: "Мёд из луговых трав, без добавок и нагревания.",
+    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80"
+  }
+];
+
+const productListEl = document.getElementById("product-list");
+
+products.forEach(product => {
+  const productEl = document.createElement("div");
+  productEl.classList.add("product");
+  
+  productEl.innerHTML = `
+    <img src="${product.image}" alt="${product.name}">
+    <h2>${product.name}</h2>
+    <p>${product.description}</p>
+    <p class="price">${product.price} руб.</p>
+    <button type="button">Подробнее</button>
+    <div class="product-details">${product.details}</div>
+  `;
+
+  const btn = productEl.querySelector("button");
+  const details = productEl.querySelector(".product-details");
+
+  btn.addEventListener("click", () => {
+    const showDetails = !details.classList.contains("show");
+    if (showDetails) {
+      details.classList.add("show");
+      btn.textContent = "Скрыть";
+    } else {
+      details.classList.remove("show");
+      btn.textContent = "Подробнее";
+    }
+  });
+
+  productListEl.appendChild(productEl);
+});
+</script>
+
+</body>
+</html>
